@@ -77,9 +77,9 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
 .card{position:relative;background:linear-gradient(180deg,#191919,#101010);box-shadow:0 0 0 1px var(--line);transition:box-shadow .4s;will-change:transform}
 .card:hover{box-shadow:0 0 0 1px rgba(200,185,154,.6),0 34px 60px -28px rgba(200,185,154,.22)}
-.ph{position:relative;aspect-ratio:1.12;display:grid;place-items:center;padding:1rem;overflow:hidden;cursor:default;background:radial-gradient(60% 50% at 50% 40%,rgba(200,185,154,.16),transparent 75%)}
+.ph{position:relative;aspect-ratio:1.12;display:grid;place-items:center;padding:.45rem;overflow:hidden;cursor:pointer;background:radial-gradient(60% 50% at 50% 40%,rgba(200,185,154,.16),transparent 75%)}
 .ph::after{content:"";position:absolute;bottom:6%;left:22%;right:22%;height:16px;background:radial-gradient(closest-side,rgba(0,0,0,.7),transparent);filter:blur(5px)}
-.ph img{position:relative;z-index:1;width:82%;height:82%;object-fit:contain;transition:none;filter:drop-shadow(0 12px 10px rgba(0,0,0,.42))}
+.ph img{position:relative;z-index:1;width:96%;height:96%;object-fit:contain;transition:none;filter:drop-shadow(0 12px 10px rgba(0,0,0,.42))}
 .card:hover .ph img{transform:none}
 .tag{position:absolute;top:0;left:0;background:var(--blue);color:#02121c;font-weight:700;font-size:.74rem;padding:.3rem .9rem .3rem .7rem;z-index:2;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%)}
 .cb{padding:.55rem .85rem 1rem}
@@ -118,7 +118,7 @@ footer{border-top:1px solid var(--line);padding:3.2rem 0 6rem;color:var(--mute);
 @keyframes pop{from{opacity:0;transform:translateY(24px) scale(.97)}}
 .mx{position:absolute;top:12px;right:12px;width:44px;height:44px;border:0;background:var(--bg);z-index:3;font-size:1.4rem}
 .mg{padding:1.4rem;background:radial-gradient(60% 50% at 50% 40%,rgba(200,185,154,.14),transparent 75%)}
-.mm{aspect-ratio:1;display:grid;place-items:center}
+.mm{aspect-ratio:1;display:grid;place-items:center;position:relative}.mm img{width:100%;height:100%;object-fit:contain}.photo-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:42px;height:42px;border:0;border-radius:50%;background:rgba(12,12,12,.82);color:#fff;font-size:1.8rem;display:grid;place-items:center;cursor:pointer}.photo-prev{left:8px}.photo-next{right:8px}.photo-nav:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .mm img{width:100%;height:100%;object-fit:contain}
 .th{display:flex;gap:.5rem;margin-top:.8rem;overflow-x:auto}
 .th button{width:64px;height:64px;flex:none;border:0;box-shadow:0 0 0 1px var(--line);background:var(--bg);padding:4px}
@@ -331,7 +331,7 @@ function drawCats(){$("#cats").innerHTML=CONFIG.categories.map(c=>`<button class
  $$(".cat").forEach(b=>b.onclick=()=>{cat=cat===b.dataset.c?null:b.dataset.c;drawCats();drawGrid();$("#produtos").scrollIntoView()})}
 const msgFor=p=>"Olá! Vi a "+p.name.toLowerCase()+" no site e gostaria de saber mais.";
 function card(p){return `<article class="card">${p.isNew?'<span class="tag">Lançamento</span>':p.featured?'<span class="tag">Destaque</span>':""}
- <div class="ph">${media(p)}</div>
+ <button class="ph" type="button" data-open="${esc(p.id)}" aria-label="Ver fotos de ${esc(p.name)}">${media(p)}</button>
  <div class="cb"><div class="meta">${esc(p.team)}${p.season?" · "+esc(p.season):""}</div><h3>${esc(p.name)}</h3>
  ${(p.variants||[]).length?p.variants.map(v=>`<div class="pr">${esc(v.label)}: ${v.price==null?"Consulte":"R$ "+Number(v.price).toFixed(2).replace(".",",")}${v.original?` <s style="font-weight:400;color:var(--mute)">R$ ${Number(v.original).toFixed(2).replace(".",",")}</s>`:""}</div>`).join(""):(p.price?`<div class="pr">${esc(p.price)}</div>`:"")}
  ${(p.sizes||[]).length?`<div class="sz">${p.sizes.map(s=>`<span>${esc(s)}</span>`).join("")}</div>`:""}
@@ -343,7 +343,7 @@ function drawGrid(){const g=$("#grid"),list=cat?PRODUCTS.filter(p=>p.category===
  $$("[data-open]").forEach(b=>b.onclick=()=>openModal(b.dataset.open))}
 function openModal(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;const n=1+(p.images||[]).length;
  $("#mb").innerHTML=`<button class="mx" aria-label="Fechar" id="mx">×</button>
- <div class="mg"><div class="mm" id="mm">${media(p,0)}</div>${n>1?`<div class="th">${Array.from({length:n},(_,i)=>`<button data-i="${i}" class="${i?"":"on"}" aria-label="Foto ${i+1}">${media(p,i)}</button>`).join("")}</div>`:""}</div>
+ <div class="mg"><div class="mm" id="mm">${media(p,0)}${n>1?'<button class="photo-nav photo-prev" type="button" aria-label="Foto anterior">‹</button><button class="photo-nav photo-next" type="button" aria-label="Próxima foto">›</button>':""}</div>${n>1?`<div class="th">${Array.from({length:n},(_,i)=>`<button data-i="${i}" class="${i?"":"on"}" aria-label="Foto ${i+1}">${media(p,i)}</button>`).join("")}</div>`:""}</div>
  <div class="mt"><div class="meta">${esc(p.team)}${p.season?" · "+esc(p.season):""}</div><h2>${esc(p.name)}</h2>
  ${(p.variants||[]).length?p.variants.map(v=>`<div class="pr" style="font-size:1.05rem">${esc(v.label)}: ${v.price==null?"Consulte":"R$ "+Number(v.price).toFixed(2).replace(".",",")}${v.original?` <s style="font-weight:400;color:var(--mute)">R$ ${Number(v.original).toFixed(2).replace(".",",")}</s>`:""}</div>`).join(""):(p.price?`<div class="pr" style="font-size:1.3rem">${esc(p.price)}</div>`:"")}
  <p>${esc(p.description||"Fale com a loja para saber mais detalhes sobre este modelo.")}</p>
@@ -351,7 +351,7 @@ function openModal(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;const n=
  <p class="meta">Frete grátis para todo o Brasil. Confirme disponibilidade e prazo pelo WhatsApp.</p>
  <div class="ca"><a class="btn wa" href="${waLink(msgFor(p))}" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div></div>`;
  $("#md").classList.add("on");document.body.style.overflow="hidden";$("#mx").onclick=closeModal;
- $$(".th button").forEach(b=>b.onclick=()=>{$("#mm").innerHTML=media(p,+b.dataset.i);$$(".th button").forEach(x=>x.classList.toggle("on",x===b))})}
+ let current=0;const showPhoto=i=>{current=(i+n)%n;$("#mm").querySelector("img")?.remove();const image=document.createElement("img");image.src=current===0?p.image:(p.images||[])[current-1];image.alt=p.team+" "+p.name;image.loading="lazy";$("#mm").prepend(image);$(".th button").forEach((x,j)=>x.classList.toggle("on",j===current))};$("#mm .photo-prev")?.addEventListener("click",()=>showPhoto(current-1));$("#mm .photo-next")?.addEventListener("click",()=>showPhoto(current+1));$(".th button").forEach(b=>b.onclick=()=>showPhoto(+b.dataset.i));let touchStart=0;$("#mm").ontouchstart=e=>{touchStart=e.changedTouches[0].clientX};$("#mm").ontouchend=e=>{const delta=e.changedTouches[0].clientX-touchStart;if(Math.abs(delta)>45)showPhoto(current+(delta<0?1:-1))}}
 function closeModal(){$("#md").classList.remove("on");document.body.style.overflow=""}
 $("#md").addEventListener("click",e=>{if(e.target.id==="md")closeModal()});
 addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
