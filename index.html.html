@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#03060a;--bg2:#111111;--ink:#f2f6f9;--mute:#8da2b2;--blue:#c8b99a;--line:rgba(255,255,255,.1);--wa:#eef3f6;
+:root{--bg:#0a0a0a;--bg2:#141414;--ink:#f4f4f2;--mute:#9b9b9b;--blue:#c8b99a;--line:rgba(255,255,255,.1);--wa:#eeeae0;
 --d:'Bebas Neue','Arial Narrow',Impact,sans-serif;--b:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:dark;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-behavior:smooth;scroll-padding-top:80px;background:var(--bg)}
@@ -144,6 +144,28 @@ footer{border-top:1px solid var(--line);padding:3.2rem 0 6rem;color:var(--mute);
 .cats{grid-template-columns:1fr 1fr}.cat{font-size:2rem;min-height:120px}
 }
 @media(prefers-reduced-motion:reduce){.mq div{animation:none}.rev{opacity:1;transform:none}html{scroll-behavior:auto}}
+
+/* Catálogo: fotos navegáveis, enquadramento neutro e sem zoom */
+.ph{display:block;cursor:default;padding:0;aspect-ratio:4/5;background:radial-gradient(65% 55% at 50% 42%,rgba(200,185,154,.13),transparent 76%);isolation:isolate}
+.ph::after{pointer-events:none}
+.card-gallery-track{position:absolute;inset:0;display:flex;width:100%;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x}
+.card-gallery-track::-webkit-scrollbar{display:none}
+.card-gallery-track img{flex:0 0 100%;width:100%;height:100%;min-width:0;object-fit:contain;padding:.45rem .55rem 1.35rem;scroll-snap-align:center;filter:drop-shadow(0 12px 10px rgba(0,0,0,.38));transition:none}
+.card:hover .card-gallery-track img{transform:none}
+.gallery-nav{position:absolute;z-index:4;top:50%;transform:translateY(-50%);width:30px;height:30px;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:rgba(10,10,10,.76);color:#fff;font-size:1.25rem;line-height:1;display:grid;place-items:center;padding:0}
+.gallery-prev{left:6px}.gallery-next{right:6px}
+.gallery-count{position:absolute;z-index:4;bottom:7px;right:8px;padding:.12rem .45rem;border-radius:20px;background:rgba(10,10,10,.76);color:#f4f4f2;font-size:.65rem;letter-spacing:.04em}
+.ph .tag{z-index:5}
+@media(max-width:860px){
+ .grid .card{flex:0 0 calc(50% - .5rem);min-width:0}
+ .ph{aspect-ratio:4/5}
+ .cb{padding:.55rem .65rem .85rem}
+ .cb h3{font-size:clamp(1rem,3.2vw,1.35rem)}
+ .pr{font-size:.82rem}
+ .ca .btn{font-size:.7rem;padding:0 .35rem;min-height:40px}
+ .gallery-nav{width:26px;height:26px;font-size:1.05rem}
+}
+
 </style>
 </head>
 <body>
@@ -330,17 +352,31 @@ let cat=null;const count=c=>PRODUCTS.filter(p=>p.category===c).length;
 function drawCats(){$("#cats").innerHTML=CONFIG.categories.map(c=>`<button class="cat${cat===c?" on":""}" data-c="${esc(c)}">${esc(c)}<small>${count(c)} ${count(c)===1?"modelo":"modelos"}</small></button>`).join("");
  $$(".cat").forEach(b=>b.onclick=()=>{cat=cat===b.dataset.c?null:b.dataset.c;drawCats();drawGrid();$("#produtos").scrollIntoView()})}
 const msgFor=p=>"Olá! Vi a "+p.name.toLowerCase()+" no site e gostaria de saber mais.";
-function card(p){return `<article class="card">${p.isNew?'<span class="tag">Lançamento</span>':p.featured?'<span class="tag">Destaque</span>':""}
- <button class="ph" type="button" data-open="${esc(p.id)}" aria-label="Ver fotos de ${esc(p.name)}">${media(p)}</button>
- <div class="cb"><div class="meta">${esc(p.team)}${p.season?" · "+esc(p.season):""}</div><h3>${esc(p.name)}</h3>
- ${(p.variants||[]).length?p.variants.map(v=>`<div class="pr">${esc(v.label)}: ${v.price==null?"Consulte":"R$ "+Number(v.price).toFixed(2).replace(".",",")}${v.original?` <s style="font-weight:400;color:var(--mute)">R$ ${Number(v.original).toFixed(2).replace(".",",")}</s>`:""}</div>`).join(""):(p.price?`<div class="pr">${esc(p.price)}</div>`:"")}
- ${(p.sizes||[]).length?`<div class="sz">${p.sizes.map(s=>`<span>${esc(s)}</span>`).join("")}</div>`:""}
- <div class="ca"><button class="btn" data-open="${esc(p.id)}">Tenho interesse</button><a class="btn wa" href="${waLink(msgFor(p))}" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div></div></article>`}
+function card(p){
+ const photos=[p.image,...(p.images||[])].filter(Boolean);
+ return `<article class="card">${p.isNew?'<span class="tag">Lançamento</span>':p.featured?'<span class="tag">Destaque</span>':""}
+  <div class="ph" aria-label="Fotos de ${esc(p.name)}">
+   <div class="card-gallery-track" aria-label="Deslize para ver as outras fotos">
+    ${photos.map((src,i)=>`<img src="${esc(src)}" alt="${esc(p.team)} ${esc(p.name)} — foto ${i+1}" loading="lazy" decoding="async">`).join("")}
+   </div>
+   ${photos.length>1?`<button class="gallery-nav gallery-prev" type="button" data-gallery-step="-1" aria-label="Foto anterior">‹</button><button class="gallery-nav gallery-next" type="button" data-gallery-step="1" aria-label="Próxima foto">›</button><span class="gallery-count">1 / ${photos.length}</span>`:""}
+  </div>
+  <div class="cb"><div class="meta">${esc(p.team)}${p.season?" · "+esc(p.season):""}</div><h3>${esc(p.name)}</h3>
+  ${(p.variants||[]).length?p.variants.map(v=>`<div class="pr">${esc(v.label)}: ${v.price==null?"Consulte":"R$ "+Number(v.price).toFixed(2).replace(".",",")}${v.original?` <s style="font-weight:400;color:var(--mute)">R$ ${Number(v.original).toFixed(2).replace(".",",")}</s>`:""}</div>`).join(""):(p.price?`<div class="pr">${esc(p.price)}</div>`:"")}
+  ${(p.sizes||[]).length?`<div class="sz">${p.sizes.map(s=>`<span>${esc(s)}</span>`).join("")}</div>`:""}
+  <div class="ca"><button class="btn" data-open="${esc(p.id)}" type="button">Ver detalhes</button><a class="btn wa" href="${waLink(msgFor(p))}" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div></div></article>`
+}
 function drawGrid(){const g=$("#grid"),list=cat?PRODUCTS.filter(p=>p.category===cat):PRODUCTS;
  $("#filterLabel").textContent=cat||"Todas as camisas";
  g.innerHTML=list.length?list.map(card).join(""):`<div class="empty">${PRODUCTS.length?"Nenhuma camisa nesta categoria por enquanto. Fale com a loja pelo WhatsApp e consulte a disponibilidade.":"Catálogo em atualização. Chame a loja no WhatsApp e veja as camisas disponíveis."}</div>`;
- if(matchMedia("(hover:hover)").matches)$$(".card").forEach(c=>{c.addEventListener("pointermove",e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(900px) rotateY(${x*7}deg) rotateX(${-y*7}deg) translateY(-4px)`});c.addEventListener("pointerleave",()=>c.style.transform="")});
- $("[data-open]").forEach(b=>b.onclick=()=>openModal(b.dataset.open));const track=$("#grid"),prev=$("#catalogPrev"),next=$("#catalogNext");if(prev)prev.onclick=()=>track.scrollBy({left:-track.clientWidth*.85,behavior:"smooth"});if(next)next.onclick=()=>track.scrollBy({left:track.clientWidth*.85,behavior:"smooth"});track.onkeydown=e=>{if(e.key==="ArrowRight")track.scrollBy({left:track.clientWidth*.85,behavior:"smooth"});if(e.key==="ArrowLeft")track.scrollBy({left:-track.clientWidth*.85,behavior:"smooth"})}}
+ $$("[data-open]").forEach(b=>b.onclick=()=>openModal(b.dataset.open));
+ const prev=$("#catalogPrev"),next=$("#catalogNext");
+ if(prev)prev.onclick=()=>g.scrollBy({left:-g.clientWidth*.85,behavior:"smooth"});
+ if(next)next.onclick=()=>g.scrollBy({left:g.clientWidth*.85,behavior:"smooth"});
+ g.onkeydown=e=>{if(e.key==="ArrowRight")g.scrollBy({left:g.clientWidth*.85,behavior:"smooth"});if(e.key==="ArrowLeft")g.scrollBy({left:-g.clientWidth*.85,behavior:"smooth"})};
+}
+$("#grid").addEventListener("click",e=>{const b=e.target.closest("[data-gallery-step]");if(!b)return;const track=b.closest(".ph")?.querySelector(".card-gallery-track");if(track)track.scrollBy({left:Number(b.dataset.galleryStep)*track.clientWidth,behavior:"smooth"})});
+$("#grid").addEventListener("scroll",e=>{const track=e.target;if(!track.classList?.contains("card-gallery-track"))return;const total=track.querySelectorAll("img").length;const index=Math.round(track.scrollLeft/track.clientWidth);const count=track.parentElement.querySelector(".gallery-count");if(count)count.textContent=(index+1)+" / "+total},true);
 function openModal(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;const n=1+(p.images||[]).length;
  $("#mb").innerHTML=`<button class="mx" aria-label="Fechar" id="mx">×</button>
  <div class="mg"><div class="mm" id="mm">${media(p,0)}${n>1?'<button class="photo-nav photo-prev" type="button" aria-label="Foto anterior">‹</button><button class="photo-nav photo-next" type="button" aria-label="Próxima foto">›</button>':""}</div>${n>1?`<div class="th">${Array.from({length:n},(_,i)=>`<button data-i="${i}" class="${i?"":"on"}" aria-label="Foto ${i+1}">${media(p,i)}</button>`).join("")}</div>`:""}</div>
