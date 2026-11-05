@@ -74,16 +74,16 @@ section{padding:clamp(4.5rem,9vw,8rem) 0}
 .cat small{font:500 .82rem var(--b);color:var(--mute)}
 .cat:hover,.cat.on{background:var(--blue);color:#02121c}
 .cat:hover small,.cat.on small{color:#02121c}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
 .card{position:relative;background:linear-gradient(180deg,#191919,#101010);box-shadow:0 0 0 1px var(--line);transition:box-shadow .4s;will-change:transform}
 .card:hover{box-shadow:0 0 0 1px rgba(200,185,154,.6),0 34px 60px -28px rgba(200,185,154,.22)}
-.ph{position:relative;aspect-ratio:1;display:grid;place-items:center;padding:1.4rem 1.4rem .6rem;overflow:hidden;cursor:pointer;background:radial-gradient(60% 50% at 50% 40%,rgba(200,185,154,.16),transparent 75%)}
+.ph{position:relative;aspect-ratio:1.12;display:grid;place-items:center;padding:1rem;overflow:hidden;cursor:default;background:radial-gradient(60% 50% at 50% 40%,rgba(200,185,154,.16),transparent 75%)}
 .ph::after{content:"";position:absolute;bottom:6%;left:22%;right:22%;height:16px;background:radial-gradient(closest-side,rgba(0,0,0,.7),transparent);filter:blur(5px)}
-.ph img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;transition:transform .6s cubic-bezier(.2,.7,.2,1);filter:drop-shadow(0 18px 14px rgba(0,0,0,.5))}
-.card:hover .ph img{transform:scale(1.06) rotate(-2deg)}
+.ph img{position:relative;z-index:1;width:82%;height:82%;object-fit:contain;transition:none;filter:drop-shadow(0 12px 10px rgba(0,0,0,.42))}
+.card:hover .ph img{transform:none}
 .tag{position:absolute;top:0;left:0;background:var(--blue);color:#02121c;font-weight:700;font-size:.74rem;padding:.3rem .9rem .3rem .7rem;z-index:2;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%)}
-.cb{padding:.6rem 1.3rem 1.4rem}
-.cb h3{font-size:2rem;margin:.15rem 0 .1rem}
+.cb{padding:.55rem .85rem 1rem}
+.cb h3{font-size:clamp(1.25rem,2vw,1.7rem);margin:.15rem 0 .1rem}
 .meta{color:var(--mute);font-size:.88rem}
 .pr{font-weight:700;margin:.6rem 0}
 .sz{display:flex;gap:.4rem;flex-wrap:wrap;margin:.5rem 0 1.1rem}
@@ -331,7 +331,7 @@ function drawCats(){$("#cats").innerHTML=CONFIG.categories.map(c=>`<button class
  $$(".cat").forEach(b=>b.onclick=()=>{cat=cat===b.dataset.c?null:b.dataset.c;drawCats();drawGrid();$("#produtos").scrollIntoView()})}
 const msgFor=p=>"Olá! Vi a "+p.name.toLowerCase()+" no site e gostaria de saber mais.";
 function card(p){return `<article class="card">${p.isNew?'<span class="tag">Lançamento</span>':p.featured?'<span class="tag">Destaque</span>':""}
- <div class="ph" data-open="${esc(p.id)}">${media(p)}</div>
+ <div class="ph">${media(p)}</div>
  <div class="cb"><div class="meta">${esc(p.team)}${p.season?" · "+esc(p.season):""}</div><h3>${esc(p.name)}</h3>
  ${(p.variants||[]).length?p.variants.map(v=>`<div class="pr">${esc(v.label)}: ${v.price==null?"Consulte":"R$ "+Number(v.price).toFixed(2).replace(".",",")}${v.original?` <s style="font-weight:400;color:var(--mute)">R$ ${Number(v.original).toFixed(2).replace(".",",")}</s>`:""}</div>`).join(""):(p.price?`<div class="pr">${esc(p.price)}</div>`:"")}
  ${(p.sizes||[]).length?`<div class="sz">${p.sizes.map(s=>`<span>${esc(s)}</span>`).join("")}</div>`:""}
