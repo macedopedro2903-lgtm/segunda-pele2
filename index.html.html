@@ -145,6 +145,55 @@ footer{border-top:1px solid var(--line);padding:3.2rem 0 6rem;color:var(--mute);
 }
 @media(prefers-reduced-motion:reduce){.mq div{animation:none}.rev{opacity:1;transform:none}html{scroll-behavior:auto}}
 
+/* Nova identidade da entrada 3D e pesquisa */
+.rail{height:100svh;position:relative}
+.hero-view{height:100svh;min-height:620px;background:radial-gradient(55% 70% at 72% 48%,#292724 0%,#151515 48%,#0a0a0a 100%)}
+.hero-glow{position:absolute;width:min(58vw,760px);aspect-ratio:1;border-radius:50%;right:5%;top:50%;transform:translateY(-50%);background:radial-gradient(circle,rgba(201,190,170,.13),rgba(201,190,170,.035) 48%,transparent 70%);pointer-events:none}
+#gl{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block;touch-action:pan-y}
+.hero-copy{position:absolute;z-index:3;left:max(5%,calc((100% - 1200px)/2));top:50%;transform:translateY(-50%);width:min(47%,560px);pointer-events:none;animation:heroIn .9s ease both}
+.hero-copy .cta{pointer-events:auto}
+.hero-eyebrow{font-size:.72rem;letter-spacing:.2em;color:#c9bea9;font-weight:700;display:flex;align-items:center;gap:.7rem}
+.hero-eyebrow span{width:25px;height:1px;background:#c9bea9}
+.hero-copy h1{font-size:clamp(4rem,8vw,8.3rem);line-height:.86;margin:1.2rem 0 1.3rem;letter-spacing:-.025em}
+.hero-copy h1 em{font-style:normal;color:#c9bea9}
+.hero-copy p{color:#b5b1aa;font-size:clamp(1rem,1.35vw,1.2rem);margin:0 0 2rem}
+.hero-copy .btn{min-height:54px;font-size:.78rem;letter-spacing:.08em}
+.hero-copy .btn.bl{background:#e8e2d7;color:#151515}
+.hero-caption{position:absolute;z-index:3;right:5%;bottom:28px;color:#8e8b85;font-size:.62rem;letter-spacing:.16em;display:flex;gap:1.2rem}
+.hero-caption span{color:#d3c7b1}
+@keyframes heroIn{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+.catalog-tools{display:grid;gap:1rem;margin:0 0 1.7rem}
+.search-box{display:flex;align-items:center;gap:.8rem;min-height:60px;padding:0 1.1rem;background:#171717;border:1px solid rgba(255,255,255,.14);color:#c9bea9}
+.search-box>span{font-size:1.7rem;line-height:1}
+.search-box input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font:500 1rem var(--b)}
+.search-box input::placeholder{color:#85827c}
+.search-box:focus-within{border-color:#c9bea9;box-shadow:0 0 0 2px rgba(201,190,169,.12)}
+.filter-row{display:flex;align-items:end;gap:.7rem;flex-wrap:wrap}
+.filter-row label{display:grid;gap:.35rem;flex:1 1 150px}
+.filter-row label span{font-size:.62rem;letter-spacing:.12em;color:var(--mute)}
+.filter-row select{width:100%;height:43px;padding:0 .7rem;border:1px solid var(--line);background:#151515;color:var(--ink);font:500 .82rem var(--b);border-radius:0}
+.clear-filters{height:43px;padding:0 1rem;border:1px solid var(--line);background:transparent;color:#c9bea9;font-size:.78rem}
+.clear-filters:hover{background:#c9bea9;color:#111}
+.search-meta{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--mute);font-size:.78rem}
+.search-history{display:flex;gap:.4rem;flex-wrap:wrap}
+.search-history button{border:1px solid var(--line);background:transparent;color:var(--mute);padding:.25rem .55rem;font-size:.7rem}
+.search-history button:hover{color:#c9bea9;border-color:#c9bea9}
+@media(max-width:860px){
+ .hero-view{min-height:650px}
+ .hero-glow{width:100vw;right:-18%;top:37%;opacity:.8}
+ .hero-copy{left:6%;top:auto;bottom:9%;transform:none;width:88%;animation:none}
+ .hero-copy h1{font-size:clamp(3.5rem,15vw,5.4rem);margin:.8rem 0}
+ .hero-copy p{margin-bottom:1.2rem}
+ .hero-copy .cta{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+ .hero-copy .btn{padding:0 .6rem;font-size:.68rem;min-height:49px}
+ .hero-caption{right:6%;bottom:calc(6px + env(safe-area-inset-bottom,0px));font-size:.53rem}
+ .filter-row{display:grid;grid-template-columns:1fr 1fr}
+ .filter-row label{min-width:0}
+ .clear-filters{grid-column:1/-1}
+ .search-meta{align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){.hero-copy{animation:none}}
+
 /* Catálogo: fotos navegáveis, enquadramento neutro e sem zoom */
 .ph{display:block;cursor:default;padding:0;aspect-ratio:4/5;background:radial-gradient(65% 55% at 50% 42%,rgba(200,185,154,.13),transparent 76%);isolation:isolate}
 .ph::after{pointer-events:none}
@@ -178,32 +227,20 @@ footer{border-top:1px solid var(--line);padding:3.2rem 0 6rem;color:var(--mute);
 <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span></button>
 </div></nav>
 
-<div class="rail" id="inicio"><div class="view">
-<div class="beams"></div>
-<div class="back">
-<div class="lay bw" data-w="-.05,0,.22,.32" aria-hidden="true">SEGUNDA PELE</div>
-<div class="lay bw" data-w=".34,.42,.62,.72" aria-hidden="true">PRETA</div>
-<div class="lay bw" data-w=".74,.84,1,1.1" aria-hidden="true">BRANCA</div>
+<div class="rail" id="inicio"><div class="view hero-view">
+<div class="hero-glow" aria-hidden="true"></div>
+<canvas id="gl" aria-label="Modelo tridimensional de uma camisa de futebol"></canvas>
+<img id="fb" alt="Camisa de futebol da Segunda Pele">
+<div class="hero-copy">
+<div class="hero-eyebrow"><span></span> SEGUNDA PELE · ARTIGOS ESPORTIVOS</div>
+<h1>SUA PAIXÃO,<br><em>SUA CAMISA.</em></h1>
+<p>Encontre a camisa que representa você.</p>
+<div class="cta">
+<a class="btn bl" href="#produtos">EXPLORAR CAMISAS</a>
+<a class="btn wa" href="#sobre">CONHECER A LOJA</a>
 </div>
-<canvas id="gl" aria-hidden="true"></canvas>
-<img id="fb" alt="Camisa da coleção Segunda Pele">
-<div class="front">
-<div class="lay f" data-w="-.05,0,.14,.26">
-<div class="logo" style="font-size:1.3rem"><img data-logo alt="" width="46" height="42"><span><span data-name></span> <span style="color:var(--mute)" data-sub></span></span></div>
-<h1>Vista a camisa do seu <em>time</em></h1>
-<p>Camisas de futebol com frete grátis para todo o Brasil. Escolha o seu manto e feche o pedido direto pelo WhatsApp.</p>
-<div class="cta"><a class="btn bl" href="#produtos">Ver produtos</a><a class="btn wa" data-wa target="_blank" rel="noopener">Falar no WhatsApp</a></div>
 </div>
-<div class="lay f r" data-w=".38,.46,.58,.68">
-<h2>Preta, com detalhes em azul</h2><p>Camisa preta com acabamento azul e branco nas mangas, gola e laterais.</p>
-<a class="btn wa" data-wa="Camisa preta" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
-</div>
-<div class="lay f" data-w=".78,.86,1,1.1">
-<h2>Branca, para o jogo fora</h2><p>Camisa branca com detalhes em preto e azul. Veja as outras opções logo abaixo.</p>
-<a class="btn wa" data-wa="Camisa branca" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
-</div>
-<div class="lay hint" data-w="-.05,0,.04,.08">Role para entrar</div>
-</div>
+<div class="hero-caption">MODELO 3D DEMONSTRATIVO <span>INTERAÇÃO 360°</span></div>
 </div></div>
 <div class="mq" aria-label="Diferenciais da loja"><div id="mq"></div></div>
 
@@ -213,7 +250,17 @@ footer{border-top:1px solid var(--line);padding:3.2rem 0 6rem;color:var(--mute);
 </div></section>
 
 <section id="produtos" style="padding-top:0"><div class="wrap">
-<div class="hd rev"><h2>Escolha seu manto</h2><p id="filterLabel">Todas as camisas</p></div>
+<div class="hd rev"><h2>Encontre seu manto</h2><p id="filterLabel">Todas as camisas</p></div>
+<div class="catalog-tools rev">
+<label class="search-box"><span aria-hidden="true">⌕</span><input id="productSearch" type="search" placeholder="Qual camisa você está procurando?" autocomplete="off" list="searchSuggestions" aria-label="Pesquisar camisas"><datalist id="searchSuggestions"></datalist></label>
+<div class="filter-row">
+<label><span>TIME / CATEGORIA</span><select id="teamFilter"><option value="">Todos os times</option></select></label>
+<label><span>MODELO</span><select id="modelFilter"><option value="">Todos os modelos</option><option value="titular">Titular</option><option value="reserva">Reserva</option><option value="goleiro">Goleiro</option><option value="retro">Retrô</option><option value="jogador">Versão jogador</option><option value="torcedor">Versão torcedor</option></select></label>
+<label><span>ORDENAR</span><select id="priceSort"><option value="default">Relevância</option><option value="low">Menor preço</option><option value="high">Maior preço</option></select></label>
+<button class="clear-filters" id="clearFilters" type="button">Limpar filtros</button>
+</div>
+<div class="search-meta"><span id="resultCount" aria-live="polite"></span><div id="searchHistory" class="search-history"></div></div>
+</div>
 <div class="catalog-nav"><button class="catalog-arrow" id="catalogPrev" type="button" aria-label="Camisetas anteriores">‹</button><span>DESLIZE OU USE AS SETAS</span><button class="catalog-arrow" id="catalogNext" type="button" aria-label="Próximas camisetas">›</button></div><div class="grid" id="grid"></div>
 </div></section>
 
@@ -294,63 +341,95 @@ $("#burger").onclick=()=>{const o=nav.classList.toggle("open");$("#burger").setA
 $$("#menu a").forEach(a=>a.addEventListener("click",()=>nav.classList.remove("open")));
 addEventListener("scroll",()=>nav.classList.toggle("s",scrollY>30),{passive:true});
 
-/* ===== Palco 3D: câmera percorre o ambiente conforme o scroll ===== */
+/* ===== Camisa 3D procedural: malha volumétrica, tecido e costuras ===== */
 (function(){
-const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches,cv=$("#gl"),rail=$(".rail");
-let R;try{R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true,powerPreference:"high-performance"})}catch(e){}
-if(!R){document.body.classList.add("nogl");return}
-R.setPixelRatio(Math.min(devicePixelRatio,1.75));
-const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(38,1,.1,80);
-const VS=`varying vec2 vUv;varying vec3 vN;varying vec3 vP;uniform float uT;
-void main(){vUv=uv;vec3 p=position;float bx=(uv.x-.5)*2.,by=(uv.y-.5)*2.;
-float bulge=(1.-bx*bx)*(1.-.35*by*by);
-p.z+=bulge*.2+sin(uv.y*5.+uT*.7+uv.x*2.)*.014*(1.-uv.y);
-vec3 n=normalize(vec3(bx*.4,by*.1,1.));vN=normalize(normalMatrix*n);
-vec4 mv=modelViewMatrix*vec4(p,1.);vP=mv.xyz;gl_Position=projectionMatrix*mv;}`;
-const FS=`uniform sampler2D uMap;uniform vec3 uL;uniform float uOp;varying vec2 vUv;varying vec3 vN;varying vec3 vP;
-void main(){vec4 c=texture2D(uMap,vUv);if(c.a<.01)discard;
-vec3 N=normalize(vN),L=normalize(uL),V=normalize(-vP),H=normalize(L+V);
-float d=dot(N,L)*.5+.5,s=pow(max(dot(N,H),0.),46.)*.3,rim=pow(1.-max(dot(N,V),0.),2.6)*.35;
-vec3 col=c.rgb*(.78+.4*d)+vec3(.6,.82,1.)*(s+rim*.25);
-gl_FragColor=vec4(col,c.a*uOp);}`;
-const H=4.4,defs=[{k:"blue",x:2.2,z:0,ry:-.3},{k:"black",x:-2.3,z:-9,ry:.32},{k:"white",x:2.4,z:-18,ry:-.32}];
-const TL=new THREE.TextureLoader(),mg=R.capabilities.getMaxAnisotropy();
-defs.forEach(d=>TL.load(IMG[d.k],t=>{t.anisotropy=mg;const w=t.image.width/t.image.height*H;
- d.m=new THREE.Mesh(new THREE.PlaneGeometry(w,H,26,32),new THREE.ShaderMaterial({uniforms:{uMap:{value:t},uL:{value:new THREE.Vector3(.3,.6,1)},uT:{value:0},uOp:{value:0}},vertexShader:VS,fragmentShader:FS,transparent:true,depthWrite:false,side:THREE.DoubleSide}));
- scene.add(d.m)}));
-const N=240,pos=new Float32Array(N*3);for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*18;pos[i*3+1]=(Math.random()-.5)*10;pos[i*3+2]=-26+Math.random()*38}
-const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.BufferAttribute(pos,3));
-const pts=new THREE.Points(g,new THREE.PointsMaterial({size:.05,color:0xc8b99a,transparent:true,opacity:.55,depthWrite:false}));scene.add(pts);
-const K={p:[0,.1,.4,.58,.8,1],x:[-.9,-.9,0,0,.9,.9],z:[8,8,-1,-1,-10,-10]};
-const sm=t=>t*t*t*(t*(t*6-15)+10),cl=(v,a,b)=>Math.max(a,Math.min(b,v));
-const kf=(a,p)=>{for(let i=0;i<5;i++)if(p<=K.p[i+1])return a[i]+(a[i+1]-a[i])*sm(cl((p-K.p[i])/(K.p[i+1]-K.p[i]),0,1));return a[5]};
-let W=1,Hh=1,sx=1,mx=0,my=0,cmx=0,cmy=0,pp=0,vis=true;
-function size(){W=cv.clientWidth;Hh=cv.clientHeight;R.setSize(W,Hh,false);cam.aspect=W/Hh;sx=W/Hh>1.1?1:0;cam.fov=sx?38:46;cam.updateProjectionMatrix()}
-size();addEventListener("resize",size);
-if(!reduce)addEventListener("pointermove",e=>{mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1},{passive:true});
-new IntersectionObserver(([e])=>vis=e.isIntersecting).observe(rail);
-const lays=$$(".lay[data-w]").map(el=>({el,w:el.dataset.w.split(",").map(Number)}));
-const t0=performance.now();
-(function loop(now){requestAnimationFrame(loop);if(!vis)return;
- const t=(now-t0)/1000,tgt=cl((scrollY-rail.offsetTop)/(rail.offsetHeight-innerHeight),0,1);
- pp+=(tgt-pp)*.07;cmx+=(mx-cmx)*.05;cmy+=(my-cmy)*.05;
- const cx=kf(K.x,pp)*sx,cz=kf(K.z,pp);
- cam.position.set(cx+cmx*.4,-cmy*.22,cz);cam.lookAt(cx-cmx*.5,cmy*.2,cz-10);
- defs.forEach(d=>{if(!d.m)return;const m=d.m,dist=cam.position.z-d.z;
-  m.position.set(d.x*sx,(sx?0:.9)+Math.sin(t*.8+d.z)*.08,d.z);
-  m.rotation.set(-cmy*.1+Math.sin(t*.5+d.z)*.02,d.ry*(sx?1:.4)+cmx*.28+Math.sin(t*.4+d.z)*.04,0);
-  m.scale.setScalar(sx?1:.82);
-  const u=m.material.uniforms;u.uT.value=t;u.uOp.value=sm(cl((26-dist)/7,0,1))*cl((dist-1)/3,0,1);u.uL.value.set(.3-cmx*1.4,.6+cmy*-.9,1)});
- pts.position.z=pp*6;pts.rotation.y=cmx*.05;
- R.render(scene,cam);
- lays.forEach(l=>{const[a,b,c,d]=l.w,o=pp<b?cl((pp-a)/(b-a),0,1):cl((d-pp)/(d-c),0,1)*(pp<c?1:1);const op=pp<c?o:cl((d-pp)/(d-c),0,1);l.el.style.opacity=op.toFixed(3);l.el.style.translate=`0 ${((1-op)*28).toFixed(1)}px`;l.el.style.visibility=op<.01?"hidden":"visible"});
-})(0);
+ const canvas=$("#gl"),fallback=$("#fb"),host=$(".hero-view");
+ if(!canvas||!host||!window.THREE){document.body.classList.add("nogl");return}
+ const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ let renderer,frame=0,visible=true,disposed=false;
+ try{
+  renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:innerWidth>700,powerPreference:"low-power"});
+ }catch(error){document.body.classList.add("nogl");return}
+ const mobile=matchMedia("(max-width: 860px)").matches;
+ renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.25:1.6));
+ renderer.setSize(host.clientWidth,host.clientHeight,false);
+ renderer.outputEncoding=THREE.sRGBEncoding;
+ renderer.shadowMap.enabled=!mobile;
+ renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ const scene=new THREE.Scene();
+ const camera=new THREE.PerspectiveCamera(34,host.clientWidth/host.clientHeight,.1,60);
+ camera.position.set(0,.15,10.8);
+ const ambient=new THREE.HemisphereLight(0xe8e2d7,0x171717,2.0);scene.add(ambient);
+ const key=new THREE.DirectionalLight(0xfff2dc,3.0);key.position.set(-4,6,8);key.castShadow=!mobile;scene.add(key);
+ const rim=new THREE.DirectionalLight(0xc9bea9,2.1);rim.position.set(5,2,-4);scene.add(rim);
+ const fill=new THREE.PointLight(0xffffff,.65,18);fill.position.set(0,-3,5);scene.add(fill);
+ const floor=new THREE.Mesh(new THREE.CircleGeometry(3.1,64),new THREE.MeshBasicMaterial({color:0x171614,transparent:true,opacity:.65}));
+ floor.rotation.x=-Math.PI/2;floor.position.set(0,-2.65,0);scene.add(floor);
+ const jersey=new THREE.Group();scene.add(jersey);
+ const outline=new THREE.Shape();
+ outline.moveTo(-.62,1.78);outline.lineTo(-1.12,1.43);outline.lineTo(-1.72,1.66);
+ outline.lineTo(-2.08,.82);outline.lineTo(-1.48,.52);outline.lineTo(-1.17,.98);
+ outline.lineTo(-1.12,-1.82);outline.quadraticCurveTo(0,-1.94,1.12,-1.82);
+ outline.lineTo(1.17,.98);outline.lineTo(1.48,.52);outline.lineTo(2.08,.82);
+ outline.lineTo(1.72,1.66);outline.lineTo(1.12,1.43);outline.lineTo(.62,1.78);
+ outline.lineTo(.4,1.45);outline.quadraticCurveTo(0,1.18,-.4,1.45);outline.closePath();
+ const bodyGeo=new THREE.ExtrudeGeometry(outline,{depth:.22,bevelEnabled:true,bevelSegments:5,steps:1,bevelSize:.065,bevelThickness:.065,curveSegments:12});
+ bodyGeo.computeVertexNormals();
+ const cloth=new THREE.MeshStandardMaterial({color:0x252522,roughness:.88,metalness:.015});
+ const body=new THREE.Mesh(bodyGeo,cloth);body.castShadow=true;body.receiveShadow=true;jersey.add(body);
+ const accent=new THREE.MeshStandardMaterial({color:0xc9bea9,roughness:.62,metalness:.08});
+ const dark=new THREE.MeshStandardMaterial({color:0x111111,roughness:.95});
+ function seam(points,radius=.018,material=accent){
+  const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(p[0],p[1],p[2]??.19)));
+  const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,40,radius,6,false),material);jersey.add(mesh);
+ }
+ // Gola e acabamento interno.
+ const collar=new THREE.Mesh(new THREE.TorusGeometry(.39,.075,12,56),accent);
+ collar.position.set(0,1.48,.22);jersey.add(collar);
+ const innerCollar=new THREE.Mesh(new THREE.TorusGeometry(.29,.035,10,48),dark);
+ innerCollar.position.set(0,1.49,.245);jersey.add(innerCollar);
+ // Costuras dos ombros e das mangas.
+ seam([[-.55,1.67,.24],[-.88,1.48,.24],[-1.23,1.35,.24],[-1.52,1.3,.24]],.016);
+ seam([[.55,1.67,.24],[.88,1.48,.24],[1.23,1.35,.24],[1.52,1.3,.24]],.016);
+ seam([[-1.42,.64,.24],[-1.12,.78,.24],[-1.12,1.02,.24]],.014,dark);
+ seam([[1.42,.64,.24],[1.12,.78,.24],[1.12,1.02,.24]],.014,dark);
+ // Painel central e pequenas linhas de tecido.
+ seam([[-.82,-1.55,.24],[0,-1.58,.24],[.82,-1.55,.24]],.012,dark);
+ const chestMark=new THREE.Mesh(new THREE.PlaneGeometry(.62,.32),new THREE.MeshStandardMaterial({color:0x393833,roughness:.95}));
+ chestMark.position.set(0,.42,.245);jersey.add(chestMark);
+ // Costuras discretas laterais.
+ seam([[-1.1,.65,.18],[-1.08,-.4,.18],[-1.06,-1.5,.18]],.012,accent);
+ seam([[1.1,.65,.18],[1.08,-.4,.18],[1.06,-1.5,.18]],.012,accent);
+ // Fundo e sombra de contato.
+ const shadow=new THREE.Mesh(new THREE.CircleGeometry(1.7,48),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.32}));
+ shadow.scale.set(1.2,.34,1);shadow.position.set(0,-2.5,-.25);scene.add(shadow);
+ jersey.rotation.y=-.22;jersey.rotation.x=.03;jersey.position.y=.03;
+ let pointerX=0,pointerY=0,targetX=0,targetY=0;
+ const pointer=e=>{const rect=host.getBoundingClientRect();targetX=((e.clientX-rect.left)/rect.width-.5)*.62;targetY=((e.clientY-rect.top)/rect.height-.5)*.28};
+ host.addEventListener("pointermove",pointer,{passive:true});
+ host.addEventListener("pointerleave",()=>{targetX=0;targetY=0},{passive:true});
+ const resize=()=>{const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<700?42:34;camera.position.z=w<700?11.8:10.8;camera.updateProjectionMatrix()};
+ addEventListener("resize",resize,{passive:true});
+ const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible&&!frame)frame=requestAnimationFrame(draw)});
+ observer.observe(host);
+ function draw(){
+  frame=0;if(disposed||!visible)return;
+  pointerX+=(targetX-pointerX)*.045;pointerY+=(targetY-pointerY)*.045;
+  const t=performance.now()*.001;
+  if(!reduced){jersey.rotation.y=-.22+pointerX+Math.sin(t*.45)*.035;jersey.rotation.x=.03+pointerY+Math.sin(t*.65)*.012;jersey.position.y=.03+Math.sin(t*.8)*.045}
+  renderer.render(scene,camera);
+  frame=requestAnimationFrame(draw);
+ }
+ resize();fallback.src=IMG.blue;
+ document.body.classList.remove("nogl");
+ if(!frame)frame=requestAnimationFrame(draw);
+ addEventListener("pagehide",()=>{disposed=true;if(frame)cancelAnimationFrame(frame);observer.disconnect();renderer.dispose();bodyGeo.dispose();cloth.dispose()},{once:true});
 })();
 
 /* categorias e produtos */
 let cat=null;const count=c=>PRODUCTS.filter(p=>p.category===c).length;
 function drawCats(){$("#cats").innerHTML=CONFIG.categories.map(c=>`<button class="cat${cat===c?" on":""}" data-c="${esc(c)}">${esc(c)}<small>${count(c)} ${count(c)===1?"modelo":"modelos"}</small></button>`).join("");
- $$(".cat").forEach(b=>b.onclick=()=>{cat=cat===b.dataset.c?null:b.dataset.c;drawCats();drawGrid();$("#produtos").scrollIntoView()})}
+ $$(".cat").forEach(b=>b.onclick=()=>{cat=cat===b.dataset.c?null:b.dataset.c;drawCats();setupSearch();drawGrid();$("#produtos").scrollIntoView()})}
 const msgFor=p=>"Olá! Vi a "+p.name.toLowerCase()+" no site e gostaria de saber mais.";
 function card(p){
  const photos=[p.image,...(p.images||[])].filter(Boolean);
@@ -366,10 +445,68 @@ function card(p){
   ${(p.sizes||[]).length?`<div class="sz">${p.sizes.map(s=>`<span>${esc(s)}</span>`).join("")}</div>`:""}
   <div class="ca"><button class="btn" data-open="${esc(p.id)}" type="button">Ver detalhes</button><a class="btn wa" href="${waLink(msgFor(p))}" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div></div></article>`
 }
-function drawGrid(){const g=$("#grid"),list=cat?PRODUCTS.filter(p=>p.category===cat):PRODUCTS;
+/* Pesquisa inteligente: usa somente os dados reais de PRODUCTS. */
+let searchTerm="",modelFilter="",priceSort="default",teamFilter="";
+const normalize=v=>String(v??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9/ ]/g," ").replace(/\s+/g," ").trim();
+const aliases={
+ "sao paulo":["spfc","tricolor paulista","soberano"],"palmeiras":["verdao","porco"],"corinthians":["timao","fiel"],"flamengo":["mengao","rubro negro","urubu"],
+ "real madrid":["madrid","merengues"],"barcelona":["barca","blaugrana"],"brasil":["selecao brasileira","selecao do brasil"],"argentina":["albiceleste"],
+ "champions league":["liga dos campeoes","champions"],"titular":["camisa i","camisa 1","home"],"reserva":["camisa ii","camisa 2","away"],
+ "goleiro":["keeper"],"retro":["retrô","classica","classico"],"jogador":["versao jogador"],"torcedor":["versao torcedor"]
+};
+const levenshtein=(a,b)=>{if(Math.abs(a.length-b.length)>2)return 3;let prev=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){let row=[i];for(let j=1;j<=b.length;j++)row[j]=Math.min(row[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=row}return prev[b.length]};
+const priceOf=p=>{const values=(p.variants||[]).map(v=>Number(v.price)).filter(Number.isFinite);if(values.length)return Math.min(...values);const m=String(p.price||"").match(/[\d.]+/);return m?Number(m[0].replace(/\.(?=.*\.)/g,"")):Infinity};
+function productText(p){
+ const base=[p.name,p.team,p.category,p.season,p.description,...(p.sizes||[]),...(p.variants||[]).map(v=>v.label)].join(" ");
+ const team=normalize(p.team),extra=Object.entries(aliases).filter(([key])=>normalize(key)===team).flatMap(([,vals])=>vals).join(" ");
+ const name=normalize(p.name),model=(/camisa i\b|camisa 1\b/.test(name)?"titular uniforme titular home ":"")+(/camisa ii\b|camisa 2\b/.test(name)?"reserva uniforme reserva away ":"")+(/retro|retrô/.test(name)?"retro classica ":"");
+ return normalize(base+" "+extra+" "+model);
+}
+function fuzzyMatch(term,text){
+ if(text.includes(term))return true;
+ const words=text.split(" ");
+ return words.some(word=>word.length>2&&term.length>2&&levenshtein(term,word)<=1);
+}
+function matchesSearch(p,q){
+ if(!q)return true;
+ const text=productText(p),tokens=normalize(q).split(" ").filter(Boolean);
+ return tokens.every(token=>{
+  if(fuzzyMatch(token,text))return true;
+  const expanded=Object.entries(aliases).find(([key])=>normalize(key)===token);
+  return expanded?expanded[1].some(a=>text.includes(normalize(a))):false;
+ });
+}
+function getHistory(){try{return JSON.parse(sessionStorage.getItem("sp-search-history")||"[]").slice(0,5)}catch(e){return []}}
+function saveHistory(q){const value=q.trim();if(value.length<2)return;try{const next=[value,...getHistory().filter(x=>normalize(x)!==normalize(value))].slice(0,5);sessionStorage.setItem("sp-search-history",JSON.stringify(next))}catch(e){}}
+function drawHistory(){
+ const el=$("#searchHistory");if(!el)return;
+ el.innerHTML=getHistory().map(q=>'<button type="button" data-history="'+esc(q)+'">'+esc(q)+'</button>').join("");
+ el.querySelectorAll("[data-history]").forEach(b=>b.addEventListener("click",()=>{const input=$("#productSearch");input.value=b.dataset.history;searchTerm=input.value;drawGrid();}));
+}
+function setupSearch(){
+ const input=$("#productSearch"),team=$("#teamFilter"),model=$("#modelFilter"),sort=$("#priceSort");
+ if(!input||!team||!model||!sort)return;
+ CONFIG.categories.forEach(c=>{const option=document.createElement("option");option.value=c;option.textContent=c;team.appendChild(option)});
+ const suggestions=[...new Set(PRODUCTS.flatMap(p=>[p.team,p.name,p.category]).filter(Boolean))];
+ $("#searchSuggestions").innerHTML=suggestions.map(v=>'<option value="'+esc(v)+'"></option>').join("");
+ input.addEventListener("input",()=>{searchTerm=input.value;drawGrid()});
+ input.addEventListener("change",()=>{saveHistory(input.value);drawHistory()});
+ input.addEventListener("keydown",e=>{if(e.key==="Enter"){saveHistory(input.value);drawHistory();input.blur()}});
+ team.addEventListener("change",()=>{teamFilter=team.value;cat=teamFilter||null;drawCats();drawGrid()});
+ model.addEventListener("change",()=>{modelFilter=model.value;drawGrid()});
+ sort.addEventListener("change",()=>{priceSort=sort.value;drawGrid()});
+ $("#clearFilters").addEventListener("click",()=>{searchTerm="";modelFilter="";priceSort="default";teamFilter="";cat=null;input.value="";team.value="";model.value="";sort.value="default";drawCats();drawGrid();input.focus()});
+ drawHistory();
+}
+function drawGrid(){const g=$("#grid");
+ let list=PRODUCTS.filter(p=>(!cat||p.category===cat)&&(!teamFilter||p.category===teamFilter)&&matchesSearch(p,searchTerm));
+ if(modelFilter)list=list.filter(p=>{const n=normalize(p.name+" "+p.description+" "+(p.variants||[]).map(v=>v.label).join(" "));if(modelFilter==="titular")return /camisa i\b|camisa 1\b/.test(n);if(modelFilter==="reserva")return /camisa ii\b|camisa 2\b/.test(n);if(modelFilter==="goleiro")return n.includes("goleiro");if(modelFilter==="retro")return n.includes("retro");return n.includes(modelFilter)});
+ if(priceSort==="low")list.sort((a,b)=>priceOf(a)-priceOf(b));
+ if(priceSort==="high")list.sort((a,b)=>priceOf(b)-priceOf(a));
  $("#filterLabel").textContent=cat||"Todas as camisas";
- g.innerHTML=list.length?list.map(card).join(""):`<div class="empty">${PRODUCTS.length?"Nenhuma camisa nesta categoria por enquanto. Fale com a loja pelo WhatsApp e consulte a disponibilidade.":"Catálogo em atualização. Chame a loja no WhatsApp e veja as camisas disponíveis."}</div>`;
- $$("[data-open]").forEach(b=>b.onclick=()=>openModal(b.dataset.open));
+ const count=$("#resultCount");if(count)count.textContent=list.length+" de "+PRODUCTS.length+" produtos";
+ g.innerHTML=list.length?list.map(card).join(""):`<div class="empty">Nenhuma camisa encontrada. Tente outro time, modelo ou termo de pesquisa, ou limpe os filtros.</div>`;
+ $("[data-open]").forEach(b=>b.onclick=()=>openModal(b.dataset.open));
  const prev=$("#catalogPrev"),next=$("#catalogNext");
  if(prev)prev.onclick=()=>g.scrollBy({left:-g.clientWidth*.85,behavior:"smooth"});
  if(next)next.onclick=()=>g.scrollBy({left:g.clientWidth*.85,behavior:"smooth"});
