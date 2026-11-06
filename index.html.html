@@ -429,7 +429,7 @@ addEventListener("scroll",()=>nav.classList.toggle("s",scrollY>30),{passive:true
 /* categorias e produtos */
 let cat=null;const count=c=>PRODUCTS.filter(p=>p.category===c).length;
 function drawCats(){$("#cats").innerHTML=CONFIG.categories.map(c=>`<button class="cat${cat===c?" on":""}" data-c="${esc(c)}">${esc(c)}<small>${count(c)} ${count(c)===1?"modelo":"modelos"}</small></button>`).join("");
- $$(".cat").forEach(b=>b.onclick=()=>{cat=cat===b.dataset.c?null:b.dataset.c;drawCats();setupSearch();drawGrid();$("#produtos").scrollIntoView()})}
+ $(".cat").forEach(b=>b.onclick=()=>{cat=cat===b.dataset.c?null:b.dataset.c;teamFilter=cat||"";const selector=$("#teamFilter");if(selector)selector.value=teamFilter;drawCats();drawGrid();$("#produtos").scrollIntoView()})}
 const msgFor=p=>"Olá! Vi a "+p.name.toLowerCase()+" no site e gostaria de saber mais.";
 function card(p){
  const photos=[p.image,...(p.images||[])].filter(Boolean);
@@ -531,7 +531,7 @@ addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
 $("#rv").innerHTML=REVIEWS.length?REVIEWS.map(r=>`<div class="rc"><q>${esc(r.text)}</q><b>${esc(r.name)}</b><div class="meta">${"★".repeat(r.rating||5)}</div></div>`).join(""):`<div class="empty" style="grid-column:1/-1">As avaliações de clientes aparecerão aqui. Adicione depoimentos reais na lista <code>REVIEWS</code>.</div>`;
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
 $$(".rev").forEach(e=>io.observe(e));
-drawCats();drawGrid();
+drawCats();setupSearch();drawGrid();
 </script>
 </body>
 </html>
