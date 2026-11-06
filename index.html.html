@@ -429,7 +429,7 @@ addEventListener("scroll",()=>nav.classList.toggle("s",scrollY>30),{passive:true
 /* categorias e produtos */
 let cat=null;const count=c=>PRODUCTS.filter(p=>p.category===c).length;
 function drawCats(){$("#cats").innerHTML=CONFIG.categories.map(c=>`<button class="cat${cat===c?" on":""}" data-c="${esc(c)}">${esc(c)}<small>${count(c)} ${count(c)===1?"modelo":"modelos"}</small></button>`).join("");
- $(".cat").forEach(b=>b.onclick=()=>{cat=cat===b.dataset.c?null:b.dataset.c;teamFilter=cat||"";const selector=$("#teamFilter");if(selector)selector.value=teamFilter;drawCats();drawGrid();$("#produtos").scrollIntoView()})}
+ $$(".cat").forEach(b=>b.onclick=()=>{cat=cat===b.dataset.c?null:b.dataset.c;teamFilter=cat||"";const selector=$("#teamFilter");if(selector)selector.value=teamFilter;drawCats();drawGrid();$("#produtos").scrollIntoView()})}
 const msgFor=p=>"Olá! Vi a "+p.name.toLowerCase()+" no site e gostaria de saber mais.";
 function card(p){
  const photos=[p.image,...(p.images||[])].filter(Boolean);
