@@ -506,7 +506,7 @@ function drawGrid(){const g=$("#grid");
  $("#filterLabel").textContent=cat||"Todas as camisas";
  const count=$("#resultCount");if(count)count.textContent=list.length+" de "+PRODUCTS.length+" produtos";
  g.innerHTML=list.length?list.map(card).join(""):`<div class="empty">Nenhuma camisa encontrada. Tente outro time, modelo ou termo de pesquisa, ou limpe os filtros.</div>`;
- $("[data-open]").forEach(b=>b.onclick=()=>openModal(b.dataset.open));
+ $$("[data-open]").forEach(b=>b.onclick=()=>openModal(b.dataset.open));
  const prev=$("#catalogPrev"),next=$("#catalogNext");
  if(prev)prev.onclick=()=>g.scrollBy({left:-g.clientWidth*.85,behavior:"smooth"});
  if(next)next.onclick=()=>g.scrollBy({left:g.clientWidth*.85,behavior:"smooth"});
