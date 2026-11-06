@@ -458,7 +458,7 @@ const levenshtein=(a,b)=>{if(Math.abs(a.length-b.length)>2)return 3;let prev=Arr
 const priceOf=p=>{const values=(p.variants||[]).map(v=>Number(v.price)).filter(Number.isFinite);if(values.length)return Math.min(...values);const m=String(p.price||"").match(/[\d.]+/);return m?Number(m[0].replace(/\.(?=.*\.)/g,"")):Infinity};
 function productText(p){
  const base=[p.name,p.team,p.category,p.season,p.description,...(p.sizes||[]),...(p.variants||[]).map(v=>v.label)].join(" ");
- const team=normalize(p.team),extra=Object.entries(aliases).filter(([key])=>normalize(key)===team).flatMap(([,vals])=>vals).join(" ");
+ const team=normalize(p.team),extra=Object.entries(aliases).filter(([key])=>normalize(key)===team).flatMap(([,vals])=>vals).join(" ")+(p.category==="Europa"?" champions league liga dos campeoes europa league":"");
  const name=normalize(p.name),model=(/camisa i\b|camisa 1\b/.test(name)?"titular uniforme titular home ":"")+(/camisa ii\b|camisa 2\b/.test(name)?"reserva uniforme reserva away ":"")+(/retro|retrô/.test(name)?"retro classica ":"");
  return normalize(base+" "+extra+" "+model);
 }
