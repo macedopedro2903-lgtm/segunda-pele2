@@ -408,7 +408,7 @@ addEventListener("scroll",()=>nav.classList.toggle("s",scrollY>30),{passive:true
  const pointer=e=>{const rect=host.getBoundingClientRect();targetX=((e.clientX-rect.left)/rect.width-.5)*.62;targetY=((e.clientY-rect.top)/rect.height-.5)*.28};
  host.addEventListener("pointermove",pointer,{passive:true});
  host.addEventListener("pointerleave",()=>{targetX=0;targetY=0},{passive:true});
- const resize=()=>{const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<700?42:34;camera.position.z=w<700?11.8:10.8;camera.updateProjectionMatrix()};
+ const resize=()=>{const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<700?42:34;camera.position.z=w<700?11.8:10.8;camera.lookAt(0,w<700?-.8:0,0);camera.updateProjectionMatrix()};
  addEventListener("resize",resize,{passive:true});
  const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible&&!frame)frame=requestAnimationFrame(draw)});
  observer.observe(host);
@@ -451,7 +451,7 @@ const normalize=v=>String(v??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"")
 const aliases={
  "sao paulo":["spfc","tricolor paulista","soberano"],"palmeiras":["verdao","porco"],"corinthians":["timao","fiel"],"flamengo":["mengao","rubro negro","urubu"],
  "real madrid":["madrid","merengues"],"barcelona":["barca","blaugrana"],"brasil":["selecao brasileira","selecao do brasil"],"argentina":["albiceleste"],
- "champions league":["liga dos campeoes","champions"],"titular":["camisa i","camisa 1","home"],"reserva":["camisa ii","camisa 2","away"],
+ "champions league":["liga dos campeoes","champions"],"2025/2026":["25/26"],"2026/2027":["26/27"],"titular":["camisa i","camisa 1","home"],"reserva":["camisa ii","camisa 2","away"],
  "goleiro":["keeper"],"retro":["retrô","classica","classico"],"jogador":["versao jogador"],"torcedor":["versao torcedor"]
 };
 const levenshtein=(a,b)=>{if(Math.abs(a.length-b.length)>2)return 3;let prev=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){let row=[i];for(let j=1;j<=b.length;j++)row[j]=Math.min(row[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=row}return prev[b.length]};
