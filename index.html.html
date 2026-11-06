@@ -473,7 +473,7 @@ function matchesSearch(p,q){
  return tokens.every(token=>{
   if(fuzzyMatch(token,text))return true;
   const expanded=Object.entries(aliases).find(([key])=>normalize(key)===token);
-  return expanded?expanded[1].some(a=>text.includes(normalize(a))):false;
+  return expanded?expanded[1].some(a=>(" "+text+" ").includes(" "+normalize(a)+" ")):false;
  });
 }
 function getHistory(){try{return JSON.parse(sessionStorage.getItem("sp-search-history")||"[]").slice(0,5)}catch(e){return []}}
